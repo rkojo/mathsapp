@@ -40,9 +40,44 @@ class Data {
       return false;
     }
   }
-  new() {
+  subvalues() {
+    const value = this.data[1] - this.data[0];
+    console.log(value);
+    if (value == this.data[2]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  mulvalues() {
+    const value = this.data[1] * this.data[2];
+    console.log(value);
+    if (value == this.data[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  newminus() {
+    this.data[0] = Math.floor(Math.random() * 1000 + 1);
+    this.data[1] = Math.floor(
+      Math.random() * (10000 - this.data[0]) + this.data[0]
+    );
+    this.data[2] = 0;
+  }
+
+  newadd() {
     this.data[0] = Math.floor(Math.random() * 1000 + 1);
     this.data[1] = Math.floor(Math.random() * this.data[0]);
+    this.data[2] = 0;
+  }
+
+  //this might be too resource intensive.
+  newmul() {
+    this.data[1] = Math.floor(Math.random() * 30 + 1);
+    this.data[0] = Math.floor(this.data[1] * Math.floor(Math.random() * 30));
     this.data[2] = 0;
   }
 }

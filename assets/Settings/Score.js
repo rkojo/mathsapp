@@ -15,7 +15,7 @@ class Score {
   }
 
   reset() {
-    score = 0;
+    this.score = 0;
   }
 }
 const score = new Score();

@@ -15,10 +15,10 @@ function AddMaths({ route, navigation }) {
   const [displayinput, setdisplay] = useState("???");
 
   const compare = () => {
-    if (data.addvalues() == true) {
+    if (data.subvalues() == true) {
       Alert.alert("Correct", "Nice Job!");
       score.add();
-      data.newadd();
+      data.newminus();
       setinput("");
       setdisplay("???");
       settext(score.showscore()),
@@ -37,7 +37,7 @@ function AddMaths({ route, navigation }) {
       <AppText>score = {text}</AppText>
       <AppText style={styles.total}>{total}</AppText>
       <AppText style={styles.maths}>
-        {value} + {displayinput}
+        {value} - {displayinput}
       </AppText>
       <AppText style={styles.addvalue}>What is the answer?</AppText>
       <TextInput

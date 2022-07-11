@@ -5,6 +5,7 @@ import AppButton from "../Components/AppButton";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
 import data from "../Settings/Data";
+import score from "../Settings/Score";
 
 function HomeScreen({ navigation }) {
   return (
@@ -16,9 +17,25 @@ function HomeScreen({ navigation }) {
         style={styles.button}
         title={"Addition"}
         onPress={() => {
-          data.new(), navigation.navigate("Add");
+          data.newadd(), navigation.navigate("Add"), score.reset();
         }}
         testID="AddButton"
+      />
+      <AppButton
+        style={styles.button}
+        title={"Subtraction"}
+        onPress={() => {
+          data.newminus(), navigation.navigate("Sub"), score.reset();
+        }}
+        testID="SubButton"
+      />
+      <AppButton
+        style={styles.button}
+        title={"Multiplication"}
+        onPress={() => {
+          data.newmul(), navigation.navigate("Mul"), score.reset();
+        }}
+        testID="MulButton"
       />
     </AppView>
   );
@@ -43,6 +60,7 @@ const styles = StyleSheet.create({
   },
   button: {
     color: "yellow",
+    marginBottom: "3%",
   },
 });
 export default HomeScreen;
