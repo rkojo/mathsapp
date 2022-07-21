@@ -37,6 +37,14 @@ function HomeScreen({ navigation }) {
         }}
         testID="MulButton"
       />
+      <AppButton
+        style={styles.button}
+        title={"Division"}
+        onPress={() => {
+          data.newdiv(), navigation.navigate("Div"), score.reset();
+        }}
+        testID="DivButton"
+      />
     </AppView>
   );
 }

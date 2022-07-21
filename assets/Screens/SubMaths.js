@@ -6,20 +6,51 @@ import AppText from "../Components/AppText";
 import AppButton from "../Components/AppButton";
 import data from "../Settings/Data";
 import score from "../Settings/Score";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function AddMaths({ route, navigation }) {
+function SubMaths({ route, navigation }) {
+  const getdata = async () => {
+    try {
+      const value = await AsyncStorage.getItem("SubHS");
+      console.log("value = " + parseInt(value));
+      if (value !== null) {
+        let test = parseInt(value);
+        console.log("test = " + test);
+        sethighscore(test);
+      } else {
+        setdata(0);
+        value = await AsyncStorage.getItem("SubHS");
+        sethighscore(value);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const setdata = async (value) => {
+    try {
+      await AsyncStorage.setItem("SubHS", JSON.stringify(value));
+      console.log("SCORE: " + AsyncStorage.getItem("SubHS"));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getdata();
+
   const [input, setinput] = useState(data.showinput());
   const [text, settext] = useState(score.showscore());
   const [total, settotal] = useState(data.showTotal());
   const [value, setvalue] = useState(data.showfirst());
   const [displayinput, setdisplay] = useState("???");
+  const [highscore, sethighscore] = useState();
 
   const compare = () => {
     if (data.subvalues() == true) {
       Alert.alert("Correct", "Nice Job!");
       score.add();
       data.newminus();
-      setinput("");
+      setinput();
       setdisplay("???");
       settext(score.showscore()),
         settotal(data.showTotal()),
@@ -34,6 +65,7 @@ function AddMaths({ route, navigation }) {
   };
   return (
     <AppView>
+      <AppText style={styles.scores}>highscore = {highscore}</AppText>
       <AppText>score = {text}</AppText>
       <AppText style={styles.total}>{total}</AppText>
       <AppText style={styles.maths}>
@@ -89,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddMaths;
+export default SubMaths;

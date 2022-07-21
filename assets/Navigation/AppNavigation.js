@@ -6,6 +6,7 @@ import HomeScreen from "../Screens/HomeScreen";
 import AddMaths from "../Screens/AddMaths";
 import SubMaths from "../Screens/SubMaths";
 import MulMaths from "../Screens/MulMaths";
+import DivMaths from "../Screens/DivMaths";
 const AppStack = createNativeStackNavigator();
 
 const AppNavigation = () => (
@@ -28,6 +29,11 @@ const AppNavigation = () => (
     <AppStack.Screen
       name="Mul"
       component={MulMaths}
+      options={{ headerShown: false }}
+    />
+    <AppStack.Screen
+      name="Div"
+      component={DivMaths}
       options={{ headerShown: false }}
     />
   </AppStack.Navigator>

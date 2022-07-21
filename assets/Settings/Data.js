@@ -9,7 +9,6 @@ class Data {
     this.data[1] = number;
   }
   changeinput(number) {
-    console.log(number);
     this.data[2] = number;
   }
   showTotal() {
@@ -33,7 +32,6 @@ class Data {
 
   addvalues() {
     const sum = this.data[1] + this.data[2];
-    console.log(sum);
     if (sum == this.data[0]) {
       return true;
     } else {
@@ -42,7 +40,6 @@ class Data {
   }
   subvalues() {
     const value = this.data[1] - this.data[0];
-    console.log(value);
     if (value == this.data[2]) {
       return true;
     } else {
@@ -52,8 +49,18 @@ class Data {
 
   mulvalues() {
     const value = this.data[1] * this.data[2];
-    console.log(value);
+
     if (value == this.data[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  divvalues() {
+    const value = this.data[0] / this.data[1];
+
+    if (value == this.data[2]) {
       return true;
     } else {
       return false;
@@ -74,8 +81,17 @@ class Data {
     this.data[2] = 0;
   }
 
-  //this might be too resource intensive.
   newmul() {
+    //random value
+    this.data[1] = Math.floor(Math.random() * 30 + 1);
+    //random value multiplied by a random value of 30.
+    this.data[0] = Math.floor(
+      this.data[1] * Math.floor(Math.random() * 30 + 1)
+    );
+    this.data[2] = 0;
+  }
+
+  newdiv() {
     this.data[1] = Math.floor(Math.random() * 30 + 1);
     this.data[0] = Math.floor(this.data[1] * Math.floor(Math.random() * 30));
     this.data[2] = 0;
