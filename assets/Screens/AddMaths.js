@@ -6,6 +6,7 @@ import AppButton from "../Components/AppButton";
 import data from "../Settings/Data";
 import score from "../Settings/Score";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppColor from "../Components/AppColor";
 
 function AddMaths({ route, navigation }) {
   //gets data from asyncstorage
@@ -42,7 +43,7 @@ function AddMaths({ route, navigation }) {
 
   const [input, setinput] = useState(data.showinput());
   const [currentscore, setscore] = useState(score.showscore());
-  const [total, settotal] = useState(data.showTotal());
+  const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
   const [displayinput, setdisplay] = useState("???");
   const [highscore, sethighscore] = useState();
@@ -50,17 +51,18 @@ function AddMaths({ route, navigation }) {
   //compares by calling data. If correct, it adds to score, checks if highscore, resets screen.
   const compare = () => {
     if (data.addvalues() == true) {
-      Alert.alert("Correct", "Nice Job!");
+      Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
       score.add();
+      setscore(score.showscore());
+      checkScore(score.showscore());
       data.newadd();
       setinput("");
       setdisplay("???");
-      setscore(score.showscore());
-      settotal(data.showTotal());
+      setzero(data.showzero());
       setvalue(data.showfirst());
-      checkScore(score.showscore());
     } else {
-      Alert.alert("Incorrect", "try Again!");
+      Alert.alert("Incorrect", "Score Reset!", "", { cancelable: true });
+      setscore(score.reset());
     }
   };
 
@@ -81,12 +83,13 @@ function AddMaths({ route, navigation }) {
 
   return (
     <AppView>
-      <AppText style={styles.scores}>highscore = {highscore}</AppText>
-      <AppText style={styles.scores}>score = {currentscore}</AppText>
-      <AppText style={styles.total}>{total}</AppText>
+      <AppText style={styles.scores}>Highscore = {highscore}</AppText>
+      <AppText style={styles.scores}>Score = {currentscore}</AppText>
       <AppText style={styles.maths}>
-        {value} + {displayinput}
+        {value} + {zero}
       </AppText>
+      <AppText style={styles.addvalue}> = </AppText>
+      <AppText style={styles.zero}>{displayinput}</AppText>
       <AppText style={styles.addvalue}>What is the answer?</AppText>
       <TextInput
         style={styles.input}
@@ -98,6 +101,9 @@ function AddMaths({ route, navigation }) {
           textin(textinput),
           setdisplay(textinput),
         ]}
+        onSubmitEditing={() => {
+          data.changeinput(parseInt(input)), compare();
+        }}
       />
       <AppButton
         title="Check"
@@ -110,22 +116,22 @@ function AddMaths({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  total: {
+  zero: {
     marginTop: 10,
     textAlign: "center",
     fontSize: 100,
     fontWeight: "bold",
-    color: "#3535BA",
+    color: AppColor.primaryColor,
   },
   maths: {
     textAlign: "center",
-    fontSize: 50,
+    fontSize: 60,
   },
   addvalue: {
     textAlign: "center",
-    fontSize: 20,
-    marginBottom: "3%",
-    marginTop: "3%",
+    fontSize: 35,
+    marginBottom: "1%",
+    marginTop: "2%",
   },
   input: {
     marginBottom: "5%",

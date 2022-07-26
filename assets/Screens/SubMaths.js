@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, FlatList, Alert, TextInput } from "react-native";
-import AppSquares from "../Components/AppSquares";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
 import AppButton from "../Components/AppButton";
 import data from "../Settings/Data";
 import score from "../Settings/Score";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppColor from "../Components/AppColor";
 
 function SubMaths({ route, navigation }) {
   const getdata = async () => {
@@ -39,8 +39,8 @@ function SubMaths({ route, navigation }) {
   getdata();
 
   const [input, setinput] = useState(data.showinput());
-  const [text, settext] = useState(score.showscore());
-  const [total, settotal] = useState(data.showTotal());
+  const [currentscore, setscore] = useState(score.showscore());
+  const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
   const [displayinput, setdisplay] = useState("???");
   const [highscore, sethighscore] = useState();
@@ -49,14 +49,26 @@ function SubMaths({ route, navigation }) {
     if (data.subvalues() == true) {
       Alert.alert("Correct", "Nice Job!");
       score.add();
+      setscore(score.showscore());
+      checkScore(score.showscore());
       data.newminus();
-      setinput();
+      setinput("");
       setdisplay("???");
-      settext(score.showscore()),
-        settotal(data.showTotal()),
-        setvalue(data.showfirst());
+      setzero(data.showzero());
+      setvalue(data.showfirst());
     } else {
-      Alert.alert("Incorrect", "try Again!");
+      Alert.alert("Incorrect", "Score Reset!");
+      setscore(score.reset());
+    }
+  };
+
+  //checks if highscore is met.
+  const checkScore = (value) => {
+    console.log("currentscore = " + value);
+    console.log("d " + highscore);
+    if (highscore < value) {
+      setdata(value);
+      sethighscore(value);
     }
   };
 
@@ -65,12 +77,13 @@ function SubMaths({ route, navigation }) {
   };
   return (
     <AppView>
-      <AppText style={styles.scores}>highscore = {highscore}</AppText>
-      <AppText>score = {text}</AppText>
-      <AppText style={styles.total}>{total}</AppText>
+      <AppText style={styles.scores}>Highscore = {highscore}</AppText>
+      <AppText>Score = {currentscore}</AppText>
       <AppText style={styles.maths}>
-        {value} - {displayinput}
+        {value} - {zero}
       </AppText>
+      <AppText style={styles.addvalue}> = </AppText>
+      <AppText style={styles.zero}>{displayinput}</AppText>
       <AppText style={styles.addvalue}>What is the answer?</AppText>
       <TextInput
         style={styles.input}
@@ -82,6 +95,9 @@ function SubMaths({ route, navigation }) {
           textin(textinput),
           setdisplay(textinput),
         ]}
+        onSubmitEditing={() => {
+          data.changeinput(parseInt(input)), compare();
+        }}
       />
       <AppButton
         title="Check"
@@ -94,11 +110,11 @@ function SubMaths({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  total: {
+  zero: {
     textAlign: "center",
     fontSize: 100,
     fontWeight: "bold",
-    color: "#3535BA",
+    color: AppColor.primaryColor,
   },
   maths: {
     textAlign: "center",
@@ -106,9 +122,9 @@ const styles = StyleSheet.create({
   },
   addvalue: {
     textAlign: "center",
-    fontSize: 20,
-    marginBottom: "3%",
-    marginTop: "3%",
+    fontSize: 35,
+    marginBottom: "1%",
+    marginTop: "2%",
   },
   input: {
     marginBottom: "5%",
