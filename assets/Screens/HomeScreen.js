@@ -11,10 +11,10 @@ function HomeScreen({ navigation }) {
   return (
     <AppView>
       <AppText style={styles.title}> Welcome to</AppText>
-      <AppText style={styles.title2}>(samplename)! </AppText>
+      <AppText style={styles.title2}> mathsguesser! </AppText>
       <AppText style={styles.subtitle}> What do you want to play? </AppText>
       <AppButton
-        style={styles.button}
+        style={styles.addbutton}
         title={"Addition"}
         onPress={() => {
           data.newadd(), navigation.navigate("Add"), score.reset();
@@ -22,7 +22,7 @@ function HomeScreen({ navigation }) {
         testID="AddButton"
       />
       <AppButton
-        style={styles.button}
+        style={styles.subbutton}
         title={"Subtraction"}
         onPress={() => {
           data.newminus(), navigation.navigate("Sub"), score.reset();
@@ -30,7 +30,7 @@ function HomeScreen({ navigation }) {
         testID="SubButton"
       />
       <AppButton
-        style={styles.button}
+        style={styles.mulbutton}
         title={"Multiplication"}
         onPress={() => {
           data.newmul(), navigation.navigate("Mul"), score.reset();
@@ -38,13 +38,25 @@ function HomeScreen({ navigation }) {
         testID="MulButton"
       />
       <AppButton
-        style={styles.button}
+        style={styles.divbutton}
         title={"Division"}
         onPress={() => {
           data.newdiv(), navigation.navigate("Div"), score.reset();
         }}
         testID="DivButton"
       />
+      <AppButton
+        style={styles.randbutton}
+        title={"Random"}
+        onPress={() => {
+          data.rand(),
+            data.randnew(),
+            navigation.navigate("Rand"),
+            score.reset();
+        }}
+        testID="DivButton"
+      />
+      <Text style={styles.subtitle}>More coming Soon!</Text>
     </AppView>
   );
 }
@@ -66,8 +78,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
   },
-  button: {
-    color: "yellow",
+  addbutton: {
+    backgroundColor: "red",
+    marginBottom: "3%",
+  },
+  subbutton: {
+    backgroundColor: "green",
+    marginBottom: "3%",
+  },
+  mulbutton: {
+    backgroundColor: "purple",
+    marginBottom: "3%",
+  },
+  divbutton: {
+    backgroundColor: "blue",
+    marginBottom: "3%",
+  },
+  randbutton: {
+    backgroundColor: "orange",
     marginBottom: "3%",
   },
 });

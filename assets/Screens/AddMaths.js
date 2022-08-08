@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Alert, TextInput } from "react-native";
+import { StyleSheet, Alert, TextInput, View } from "react-native";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
 import AppButton from "../Components/AppButton";
@@ -89,7 +89,16 @@ function AddMaths({ route, navigation }) {
         {value} + {zero}
       </AppText>
       <AppText style={styles.addvalue}> = </AppText>
-      <AppText style={styles.zero}>{displayinput}</AppText>
+      <View style={styles.view}>
+        <AppText style={styles.zero}>{displayinput}</AppText>
+        <AppButton
+          title="Check Answer"
+          style={styles.button}
+          onPress={() => {
+            data.changeinput(parseInt(input)), compare();
+          }}
+        />
+      </View>
       <AppText style={styles.addvalue}>What is the answer?</AppText>
       <TextInput
         style={styles.input}
@@ -105,19 +114,13 @@ function AddMaths({ route, navigation }) {
           data.changeinput(parseInt(input)), compare();
         }}
       />
-      <AppButton
-        title="Check"
-        onPress={() => {
-          data.changeinput(parseInt(input)), compare();
-        }}
-      />
     </AppView>
   );
 }
 
 const styles = StyleSheet.create({
   zero: {
-    marginTop: 10,
+    marginTop: "1%",
     textAlign: "center",
     fontSize: 100,
     fontWeight: "bold",
@@ -144,6 +147,18 @@ const styles = StyleSheet.create({
   },
   scores: {
     fontSize: 20,
+  },
+  button: {
+    marginLeft: "15%",
+    width: 120,
+    marginTop: "20%",
+  },
+  view: {
+    height: "30%",
+    length: 30,
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "center",
   },
 });
 

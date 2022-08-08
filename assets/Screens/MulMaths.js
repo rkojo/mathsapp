@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, FlatList, Alert, TextInput } from "react-native";
+import { StyleSheet, Alert, TextInput, View } from "react-native";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
 import AppButton from "../Components/AppButton";
@@ -83,7 +83,16 @@ function MulMaths({ route, navigation }) {
         {value} X {zero}
       </AppText>
       <AppText style={styles.addvalue}> = </AppText>
-      <AppText style={styles.zero}>{displayinput}</AppText>
+      <View style={styles.view}>
+        <AppText style={styles.zero}>{displayinput}</AppText>
+        <AppButton
+          title="Check Answer"
+          style={styles.button}
+          onPress={() => {
+            data.changeinput(parseInt(input)), compare();
+          }}
+        />
+      </View>
       <AppText style={styles.addvalue}>What is the answer?</AppText>
       <TextInput
         style={styles.input}
@@ -96,12 +105,6 @@ function MulMaths({ route, navigation }) {
           setdisplay(textinput),
         ]}
         onSubmitEditing={() => {
-          data.changeinput(parseInt(input)), compare();
-        }}
-      />
-      <AppButton
-        title="Check"
-        onPress={() => {
           data.changeinput(parseInt(input)), compare();
         }}
       />
@@ -134,6 +137,21 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     width: "100%",
     marginBottom: "5%",
+  },
+  scores: {
+    fontSize: 20,
+  },
+  button: {
+    marginLeft: "15%",
+    width: 120,
+    marginTop: "20%",
+  },
+  view: {
+    height: "30%",
+    length: 30,
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "center",
   },
 });
 

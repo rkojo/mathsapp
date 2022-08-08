@@ -3,7 +3,7 @@ export default {
   secondaryColor: "#000000", // pink
   thirdColor: "#0DE323", //green
   fourthColor: "#E38D0D", //orange
-  fifthColor: "rgba(214, 250 , 33, 0.15)", //background colour
+  fifthColor: "#E7E9C2", //background colour
   black: "#000000",
   white: "#ffffff",
 };

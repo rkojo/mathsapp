@@ -1,6 +1,8 @@
 class Data {
   constructor() {
     this.data = [0, 0, 0];
+    this.notation = null;
+    this.mode = 0;
   }
   changezero(number) {
     this.data[0] = number;
@@ -58,7 +60,8 @@ class Data {
   }
 
   divvalues() {
-    const value = this.data[0] / this.data[1];
+    //value / zero
+    const value = this.data[1] / this.data[0];
     if (value == this.data[2]) {
       return true;
     } else {
@@ -92,8 +95,70 @@ class Data {
   newdiv() {
     this.data[1] = Math.floor(Math.random() * 30 + 1);
     this.data[0] = Math.floor(this.data[1] * Math.floor(Math.random() * 30));
+    //needed for random - value needs to be higher.
+    const temp = this.data[1];
+    this.data[1] = this.data[0];
+    this.data[0] = temp;
     this.data[2] = 0;
   }
+  rand() {
+    const rand = Math.random();
+    if (rand >= 0 && rand < 0.25) {
+      this.notation = "+";
+      this.mode = 0;
+    }
+    if (rand >= 0.25 && rand < 0.5) {
+      this.notation = "-";
+      this.mode = 1;
+    }
+    if (rand >= 0.5 && rand < 0.75) {
+      this.notation = "X";
+      this.mode = 2;
+    }
+    if (rand >= 0.75) {
+      this.notation = "/";
+      this.mode = 3;
+    }
+  }
+
+  randnew() {
+    if (this.mode == 0) {
+      this.newadd();
+    }
+    if (this.mode == 1) {
+      this.newminus();
+    }
+    if (this.mode == 2) {
+      this.newmul();
+    }
+    if (this.mode == 3) {
+      this.newdiv();
+    }
+  }
+
+  randcheck() {
+    if (this.mode == 0) {
+      return this.addvalues();
+    }
+    if (this.mode == 1) {
+      return this.subvalues();
+    }
+    if (this.mode == 2) {
+      return this.mulvalues();
+    }
+    if (this.mode == 3) {
+      return this.divvalues();
+    }
+  }
+
+  randret() {
+    return this.mode;
+  }
+
+  randnot() {
+    return this.notation;
+  }
 }
+
 const currentdata = new Data();
 export default currentdata;
