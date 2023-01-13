@@ -13,49 +13,59 @@ function HomeScreen({ navigation }) {
       <AppText style={styles.title}> Welcome to</AppText>
       <AppText style={styles.title2}> mathsguesser! </AppText>
       <AppText style={styles.subtitle}> What do you want to play? </AppText>
-      <AppButton
-        style={styles.addbutton}
-        title={"Addition"}
-        onPress={() => {
-          data.newadd(), navigation.navigate("Add"), score.reset();
-        }}
-        testID="AddButton"
-      />
-      <AppButton
-        style={styles.subbutton}
-        title={"Subtraction"}
-        onPress={() => {
-          data.newminus(), navigation.navigate("Sub"), score.reset();
-        }}
-        testID="SubButton"
-      />
-      <AppButton
-        style={styles.mulbutton}
-        title={"Multiplication"}
-        onPress={() => {
-          data.newmul(), navigation.navigate("Mul"), score.reset();
-        }}
-        testID="MulButton"
-      />
-      <AppButton
-        style={styles.divbutton}
-        title={"Division"}
-        onPress={() => {
-          data.newdiv(), navigation.navigate("Div"), score.reset();
-        }}
-        testID="DivButton"
-      />
-      <AppButton
-        style={styles.randbutton}
-        title={"Random"}
-        onPress={() => {
-          data.rand(),
-            data.randnew(),
-            navigation.navigate("Rand"),
-            score.reset();
-        }}
-        testID="DivButton"
-      />
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.addbutton}
+          title={"Addition"}
+          onPress={() => {
+            data.newadd(), navigation.navigate("Add"), score.reset();
+          }}
+          testID="AddButton"
+        />
+      </View>
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.subbutton}
+          title={"Subtraction"}
+          onPress={() => {
+            data.newminus(), navigation.navigate("Sub"), score.reset();
+          }}
+          testID="SubButton"
+        />
+      </View>
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.mulbutton}
+          title={"Multiplication"}
+          onPress={() => {
+            data.newmul(), navigation.navigate("Mul"), score.reset();
+          }}
+          testID="MulButton"
+        />
+      </View>
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.divbutton}
+          title={"Division"}
+          onPress={() => {
+            data.newdiv(), navigation.navigate("Div"), score.reset();
+          }}
+          testID="DivButton"
+        />
+      </View>
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.randbutton}
+          title={"Random"}
+          onPress={() => {
+            data.rand(),
+              data.randnew(),
+              navigation.navigate("Rand"),
+              score.reset();
+          }}
+          testID="DivButton"
+        />
+      </View>
       <Text style={styles.subtitle}>More coming Soon!</Text>
     </AppView>
   );
@@ -80,23 +90,21 @@ const styles = StyleSheet.create({
   },
   addbutton: {
     backgroundColor: "red",
-    marginBottom: "3%",
   },
   subbutton: {
     backgroundColor: "green",
-    marginBottom: "3%",
   },
   mulbutton: {
     backgroundColor: "purple",
-    marginBottom: "3%",
   },
   divbutton: {
     backgroundColor: "blue",
-    marginBottom: "3%",
   },
   randbutton: {
     backgroundColor: "orange",
-    marginBottom: "3%",
+  },
+  spaces: {
+    marginBottom: "1%",
   },
 });
 export default HomeScreen;

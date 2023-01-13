@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Alert, TextInput, View } from "react-native";
+import { StyleSheet, Alert, TextInput, View, Modal } from "react-native";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
 import AppButton from "../Components/AppButton";
@@ -47,11 +47,26 @@ function AddMaths({ route, navigation }) {
   const [value, setvalue] = useState(data.showfirst());
   const [displayinput, setdisplay] = useState("???");
   const [highscore, sethighscore] = useState();
+  const [colour, setcolour] = useState(AppColor.white);
+  const [result, setresult] = useState("  Correct");
+  const [modalvisible, setmodalvisible] = useState(false);
+  const [errors, seterrors] = useState(0);
+
+  const resultcorrect = () => {
+    setresult("  Correct");
+    setcolour(AppColor.green);
+  };
+
+  const resultincorrect = () => {
+    setresult("Incorrect");
+    setcolour(AppColor.red);
+  };
 
   //compares by calling data. If correct, it adds to score, checks if highscore, resets screen.
   const compare = () => {
     if (data.addvalues() == true) {
-      Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
+      resultcorrect();
+      //Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
       score.add();
       setscore(score.showscore());
       checkScore(score.showscore());
@@ -61,11 +76,26 @@ function AddMaths({ route, navigation }) {
       setzero(data.showzero());
       setvalue(data.showfirst());
     } else {
-      Alert.alert("Incorrect", "Score Reset!", "", { cancelable: true });
-      setscore(score.reset());
+      resultincorrect();
+      seterrors(errors + 1);
+    }
+    if (errors > 1) {
+      setmodalvisible(true);
     }
   };
+  const gameEnd = () => {
+    data.rand();
+    data.randnew();
+    seterrors(0);
+    score.reset();
+    navigation.push("Add");
+  };
 
+  const gameLeave = () => {
+    setscore(score.reset());
+    seterrors(0);
+    navigation.push("Home");
+  };
   //checks if highscore is met.
   const checkScore = (value) => {
     console.log("currentscore = " + value);
@@ -83,21 +113,50 @@ function AddMaths({ route, navigation }) {
 
   return (
     <AppView>
-      <AppText style={styles.scores}>Highscore = {highscore}</AppText>
-      <AppText style={styles.scores}>Score = {currentscore}</AppText>
+      <Modal visible={modalvisible} style={styles.modal}>
+        <View style={styles.modalview}>
+          <AppText style={styles.modaltext}>GAME OVER</AppText>
+          <AppButton
+            style={styles.modalbutton}
+            title="Try Again"
+            onPress={() => [setmodalvisible(!modalvisible), gameEnd()]}
+          />
+          <AppButton
+            style={styles.modalbutton}
+            title="Return Home!"
+            onPress={() => [setmodalvisible(!modalvisible), gameLeave()]}
+          />
+        </View>
+      </Modal>
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.return}
+          title={"return"}
+          onPress={() => {
+            navigation.push("Home");
+          }}
+          testID="SubButton"
+        />
+        <AppText style={styles.scores}> Highscore = {highscore} </AppText>
+        <AppText style={styles.scores}> Score = {currentscore} </AppText>
+        <AppText style={{ color: colour, fontSize: 35 }}> {result}</AppText>
+      </View>
+      <AppText style={styles.scores}>Errors = {errors}</AppText>
       <AppText style={styles.maths}>
         {value} + {zero}
       </AppText>
       <AppText style={styles.addvalue}> = </AppText>
       <View style={styles.view}>
         <AppText style={styles.zero}>{displayinput}</AppText>
-        <AppButton
-          title="Check Answer"
-          style={styles.button}
-          onPress={() => {
-            data.changeinput(parseInt(input)), compare();
-          }}
-        />
+        <View style={styles.viewbutton}>
+          <AppButton
+            title="Check Answer"
+            style={styles.button}
+            onPress={() => {
+              data.changeinput(parseInt(input)), compare();
+            }}
+          />
+        </View>
       </View>
       <AppText style={styles.addvalue}>What is the answer?</AppText>
       <TextInput
@@ -119,6 +178,15 @@ function AddMaths({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  spaces: {
+    flex: 1,
+    flexDirection: "row-reverse",
+    width: "100%",
+    height: "5%",
+    alignSelf: "flex-end",
+    marginTop: "0.5%",
+    justifyContent: "space-between",
+  },
   zero: {
     marginTop: "1%",
     textAlign: "center",
@@ -137,28 +205,55 @@ const styles = StyleSheet.create({
     marginTop: "2%",
   },
   input: {
-    marginBottom: "5%",
+    marginBottom: "3%",
     backgroundColor: "#E0E0DF",
     borderRadius: 25,
     padding: 15,
     alignContent: "space-around",
     width: "100%",
-    marginBottom: "5%",
+    marginBottom: "3%",
   },
   scores: {
     fontSize: 20,
   },
   button: {
-    marginLeft: "15%",
     width: 120,
-    marginTop: "20%",
   },
   view: {
-    height: "30%",
+    height: "20%",
     length: 30,
     flexDirection: "row",
     width: "100%",
     justifyContent: "center",
+  },
+  viewbutton: {
+    marginTop: "3.5%",
+    marginLeft: "5%",
+  },
+  modalview: {
+    backgroundColor: "red",
+    flex: 1,
+    width: "25%",
+    height: "25%",
+    justifyContent: "space-evenly",
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  modal: {
+    backgroundColor: "blue",
+    width: "20%",
+    height: "25%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modaltext: {
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 50,
+  },
+  modalbutton: {
+    marginTop: "4%",
+    alignSelf: "center",
   },
 });
 

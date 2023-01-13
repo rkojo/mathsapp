@@ -12,7 +12,7 @@ const AppStack = createNativeStackNavigator();
 const AppNavigation = () => (
   <AppStack.Navigator>
     <AppStack.Screen
-      name="home"
+      name="Home"
       component={HomeScreen}
       options={{ headerShown: false }}
     />
