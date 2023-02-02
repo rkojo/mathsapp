@@ -48,7 +48,7 @@ function AddMaths({ route, navigation }) {
   const [displayinput, setdisplay] = useState("???");
   const [highscore, sethighscore] = useState();
   const [colour, setcolour] = useState(AppColor.white);
-  const [result, setresult] = useState("  Correct");
+  const [result, setresult] = useState("         ");
   const [modalvisible, setmodalvisible] = useState(false);
   const [errors, seterrors] = useState(0);
 
@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   modalview: {
-    backgroundColor: "red",
     flex: 1,
     width: "25%",
     height: "25%",

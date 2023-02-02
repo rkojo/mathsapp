@@ -50,7 +50,7 @@ function RandMaths({ route, navigation }) {
   const [notation, setnotation] = useState(data.randnot());
   const [errors, seterrors] = useState(0);
   const [colour, setcolour] = useState(AppColor.white);
-  const [result, setresult] = useState("  Correct");
+  const [result, setresult] = useState("         ");
   const [modalvisible, setmodalvisible] = useState(false);
 
   const resultcorrect = () => {
@@ -235,7 +235,6 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
   },
   modalview: {
-    backgroundColor: "red",
     flex: 1,
     width: "25%",
     height: "25%",
