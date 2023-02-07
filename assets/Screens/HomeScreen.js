@@ -66,6 +66,15 @@ function HomeScreen({ navigation }) {
           testID="DivButton"
         />
       </View>
+      <View style={styles.spaces}>
+        <AppButton
+          style={styles.settingsbutton}
+          title={"Settings"}
+          onPress={() => {
+            navigation.navigate("Settings");
+          }}
+        />
+      </View>
       <Text style={styles.subtitle}>More coming Soon!</Text>
     </AppView>
   );

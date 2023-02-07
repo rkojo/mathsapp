@@ -7,6 +7,7 @@ import SubMaths from "../Screens/SubMaths";
 import MulMaths from "../Screens/MulMaths";
 import DivMaths from "../Screens/DivMaths";
 import RandMaths from "../Screens/RandMaths";
+import Settings from "../Screens/SettingsScreen";
 const AppStack = createNativeStackNavigator();
 
 const AppNavigation = () => (
@@ -39,6 +40,11 @@ const AppNavigation = () => (
     <AppStack.Screen
       name="Rand"
       component={RandMaths}
+      options={{ headerShown: false }}
+    />
+    <AppStack.Screen
+      name="Settings"
+      component={Settings}
       options={{ headerShown: false }}
     />
   </AppStack.Navigator>
