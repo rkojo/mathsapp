@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppButton from "../Components/AppButton";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
+import AppColor from "../Components/AppColor";
 
 function SettingsScreen({ route, navigation }) {
   const reset = async () => {
@@ -28,16 +29,18 @@ function SettingsScreen({ route, navigation }) {
             Are you sure you want to reset scores?
           </AppText>
           <AppText style={styles.modaltext}>This is not reversable!</AppText>
-          <AppButton
-            style={styles.modalbutton}
-            title="Yes"
-            onPress={() => [setmodalvisible(false), reset()]}
-          />
-          <AppButton
-            style={styles.modalbutton}
-            title="No"
-            onPress={() => [setmodalvisible(false)]}
-          />
+          <View style={styles.modalbuttonview}>
+            <AppButton
+              style={styles.modalbutton1}
+              title="Yes"
+              onPress={() => [setmodalvisible(false), reset()]}
+            />
+            <AppButton
+              style={styles.modalbutton2}
+              title="No"
+              onPress={() => [setmodalvisible(false)]}
+            />
+          </View>
         </View>
       </Modal>
       <View style={styles.space}>
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "blue",
-    width: "20%",
+    width: "40%",
     height: "25%",
     justifyContent: "center",
     alignItems: "center",
@@ -94,11 +97,23 @@ const styles = StyleSheet.create({
   modaltext: {
     alignItems: "center",
     justifyContent: "center",
-    fontSize: 50,
+    fontSize: 30,
+    textAlign: "center",
   },
-  modalbutton: {
-    marginTop: "4%",
+  modalbutton1: {
+    backgroundColor: AppColor.red,
     alignSelf: "center",
+  },
+  modalbutton2: {
+    backgroundColor: AppColor.green,
+    alignSelf: "center",
+  },
+  modalbuttonview: {
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    width: "100%",
+    height: "20%",
+    marginTop: "5%",
   },
 });
 export default SettingsScreen;

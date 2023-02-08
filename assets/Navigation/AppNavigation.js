@@ -8,6 +8,7 @@ import MulMaths from "../Screens/MulMaths";
 import DivMaths from "../Screens/DivMaths";
 import RandMaths from "../Screens/RandMaths";
 import Settings from "../Screens/SettingsScreen";
+import Help from "../Screens/HelpScreen";
 const AppStack = createNativeStackNavigator();
 
 const AppNavigation = () => (
@@ -18,27 +19,32 @@ const AppNavigation = () => (
       options={{ headerShown: false }}
     />
     <AppStack.Screen
-      name="Add"
+      name="Help"
+      component={Help}
+      options={{ headerShown: false }}
+    />
+    <AppStack.Screen
+      name="Addition"
       component={AddMaths}
       options={{ headerShown: false }}
     />
     <AppStack.Screen
-      name="Sub"
+      name="Subtraction"
       component={SubMaths}
       options={{ headerShown: false }}
     />
     <AppStack.Screen
-      name="Mul"
+      name="Multiplication"
       component={MulMaths}
       options={{ headerShown: false }}
     />
     <AppStack.Screen
-      name="Div"
+      name="Division"
       component={DivMaths}
       options={{ headerShown: false }}
     />
     <AppStack.Screen
-      name="Rand"
+      name="Random"
       component={RandMaths}
       options={{ headerShown: false }}
     />

@@ -245,6 +245,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     fontSize: 50,
+    textAlign: "center",
   },
   modalbutton: {
     marginTop: "4%",

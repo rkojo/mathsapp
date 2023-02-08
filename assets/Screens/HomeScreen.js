@@ -10,15 +10,24 @@ import score from "../Settings/Score";
 function HomeScreen({ navigation }) {
   return (
     <AppView>
-      <AppText style={styles.title}> Welcome to</AppText>
-      <AppText style={styles.title2}> mathsguesser! </AppText>
-      <AppText style={styles.subtitle}> What do you want to play? </AppText>
+      <View style={styles.titles}>
+        <AppText style={styles.title}> Welcome to</AppText>
+        <AppText style={styles.title2}> mathsguesser! </AppText>
+        <AppText style={styles.subtitle}> What do you want to play? </AppText>
+        <AppButton
+          style={styles.helpbutton}
+          title={"Help"}
+          onPress={() => {
+            navigation.navigate("Help");
+          }}
+        />
+      </View>
       <View style={styles.spaces}>
         <AppButton
           style={styles.addbutton}
           title={"Addition"}
           onPress={() => {
-            data.newadd(), navigation.navigate("Add"), score.reset();
+            data.newadd(), navigation.navigate("Addition"), score.reset();
           }}
           testID="AddButton"
         />
@@ -28,7 +37,7 @@ function HomeScreen({ navigation }) {
           style={styles.subbutton}
           title={"Subtraction"}
           onPress={() => {
-            data.newminus(), navigation.navigate("Sub"), score.reset();
+            data.newminus(), navigation.navigate("Subtraction"), score.reset();
           }}
           testID="SubButton"
         />
@@ -38,7 +47,7 @@ function HomeScreen({ navigation }) {
           style={styles.mulbutton}
           title={"Multiplication"}
           onPress={() => {
-            data.newmul(), navigation.navigate("Mul"), score.reset();
+            data.newmul(), navigation.navigate("Multiplication"), score.reset();
           }}
           testID="MulButton"
         />
@@ -48,7 +57,7 @@ function HomeScreen({ navigation }) {
           style={styles.divbutton}
           title={"Division"}
           onPress={() => {
-            data.newdiv(), navigation.navigate("Div"), score.reset();
+            data.newdiv(), navigation.navigate("Division"), score.reset();
           }}
           testID="DivButton"
         />
@@ -60,7 +69,7 @@ function HomeScreen({ navigation }) {
           onPress={() => {
             data.rand(),
               data.randnew(),
-              navigation.navigate("Rand"),
+              navigation.navigate("Random"),
               score.reset();
           }}
           testID="DivButton"
@@ -81,6 +90,11 @@ function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  titles: {
+    flexDirection: "row",
+    marginTop: "1%",
+    marginBottom: "2%",
+  },
   title: {
     fontSize: 25,
     fontWeight: "normal",
