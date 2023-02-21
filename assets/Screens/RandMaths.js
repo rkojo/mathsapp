@@ -88,16 +88,21 @@ function RandMaths({ route, navigation }) {
   };
 
   const gameEnd = () => {
-    data.rand();
+    data.reset();
     data.randnew();
     seterrors(0);
     score.reset();
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Rand");
   };
 
   const gameLeave = () => {
     setscore(score.reset());
     seterrors(0);
+    setcolour(AppColor.white);
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Home");
   };
 

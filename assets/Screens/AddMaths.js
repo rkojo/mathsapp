@@ -46,7 +46,7 @@ function AddMaths({ route, navigation }) {
   const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
   const [displayinput, setdisplay] = useState("???");
-  const [highscore, sethighscore] = useState();
+  const [highscore, sethighscore] = useState(0);
   const [colour, setcolour] = useState(AppColor.white);
   const [result, setresult] = useState("         ");
   const [modalvisible, setmodalvisible] = useState(false);
@@ -84,16 +84,21 @@ function AddMaths({ route, navigation }) {
     }
   };
   const gameEnd = () => {
-    data.rand();
-    data.randnew();
+    data.reset();
+    data.newadd();
     seterrors(0);
     score.reset();
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Add");
   };
 
   const gameLeave = () => {
     setscore(score.reset());
     seterrors(0);
+    setcolour(AppColor.white);
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Home");
   };
   //checks if highscore is met.

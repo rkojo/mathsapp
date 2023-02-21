@@ -6,6 +6,7 @@ import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
 import data from "../Settings/Data";
 import score from "../Settings/Score";
+import AddMaths from "./AddMaths";
 
 function HomeScreen({ navigation }) {
   return (
@@ -27,7 +28,9 @@ function HomeScreen({ navigation }) {
           style={styles.addbutton}
           title={"Addition"}
           onPress={() => {
-            data.newadd(), navigation.navigate("Addition"), score.reset();
+            data.newadd();
+            navigation.push("Addition");
+            score.reset();
           }}
           testID="AddButton"
         />
@@ -37,7 +40,9 @@ function HomeScreen({ navigation }) {
           style={styles.subbutton}
           title={"Subtraction"}
           onPress={() => {
-            data.newminus(), navigation.navigate("Subtraction"), score.reset();
+            data.newminus();
+            navigation.push("Subtraction");
+            score.reset();
           }}
           testID="SubButton"
         />
@@ -47,7 +52,7 @@ function HomeScreen({ navigation }) {
           style={styles.mulbutton}
           title={"Multiplication"}
           onPress={() => {
-            data.newmul(), navigation.navigate("Multiplication"), score.reset();
+            data.newmul(), navigation.push("Multiplication"), score.reset();
           }}
           testID="MulButton"
         />
@@ -57,7 +62,7 @@ function HomeScreen({ navigation }) {
           style={styles.divbutton}
           title={"Division"}
           onPress={() => {
-            data.newdiv(), navigation.navigate("Division"), score.reset();
+            data.newdiv(), navigation.push("Division"), score.reset();
           }}
           testID="DivButton"
         />

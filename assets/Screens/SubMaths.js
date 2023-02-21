@@ -81,16 +81,23 @@ function SubMaths({ route, navigation }) {
   };
 
   const gameEnd = () => {
-    data.rand();
-    data.randnew();
+    data.reset();
+    data.newminus();
     seterrors(0);
     score.reset();
+    setcolour(AppColor.white);
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Sub");
   };
 
   const gameLeave = () => {
     seterrors(0);
     setscore(score.reset());
+    data.reset();
+    setcolour(AppColor.white);
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Home");
   };
 

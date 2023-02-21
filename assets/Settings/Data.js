@@ -3,7 +3,10 @@ class Data {
     this.data = [0, 0, 0];
     this.notation = null;
     this.mode = 0;
+    this.addsubdifficulty = 1000;
+    this.muldivdifficulty = 30;
   }
+
   changezero(number) {
     this.data[0] = number;
   }
@@ -22,10 +25,23 @@ class Data {
   showinput() {
     return this.data[2];
   }
-  reset() {
-    for (i = 0; i < this.data.length; i++) {
-      this.data[1] = 0;
+  showdiff() {
+    if (this.addsubdifficulty == 1000) {
+      return "Hard";
     }
+    if (this.addsubdifficulty == 500) {
+      return "Medium";
+    }
+    if (this.addsubdifficulty == 100) {
+      return "Easy";
+    }
+  }
+  reset() {
+    let adddiff = this.addsubdifficulty;
+    let muldiff = this.muldivdifficulty;
+    new Data();
+    this.addsubdifficulty = adddiff;
+    this.muldivdifficulty = muldiff;
   }
 
   clearInput() {
@@ -70,31 +86,33 @@ class Data {
   }
 
   newminus() {
-    this.data[0] = Math.floor(Math.random() * 1000 + 1);
+    this.data[0] = Math.floor(Math.random() * this.addsubdifficulty + 1);
     this.data[1] = Math.floor(
-      Math.random() * (10000 - this.data[0]) + this.data[0]
+      Math.random() * (this.addsubdifficulty * 1 - this.data[0]) + this.data[0]
     );
     this.data[2] = 0;
   }
 
   newadd() {
     //add data[0] and data[1]. data[2] used to add them up.
-    this.data[0] = Math.floor(Math.random() * 1000 + 1);
-    this.data[1] = Math.floor(Math.random() * 1000 + 1);
+    this.data[0] = Math.floor(Math.random() * this.addsubdifficulty + 1);
+    this.data[1] = Math.floor(Math.random() * this.addsubdifficulty + 1);
     this.data[2] = 0;
   }
 
   newmul() {
     //random value
-    this.data[1] = Math.floor(Math.random() * 30 + 1);
+    this.data[1] = Math.floor(Math.random() * this.muldivdifficulty + 1);
     //random value multiplied by a random value of 30.
-    this.data[0] = Math.floor(Math.random() * 30 + 1);
+    this.data[0] = Math.floor(Math.random() * this.muldivdifficulty + 1);
     this.data[2] = 0;
   }
 
   newdiv() {
-    this.data[1] = Math.floor(Math.random() * 30 + 1);
-    this.data[0] = Math.floor(this.data[1] * Math.floor(Math.random() * 30));
+    this.data[1] = Math.floor(Math.random() * this.muldivdifficulty + 1);
+    this.data[0] = Math.floor(
+      this.data[1] * Math.floor(Math.random() * this.muldivdifficulty)
+    );
     //needed for random - value needs to be higher.
     const temp = this.data[1];
     this.data[1] = this.data[0];
@@ -157,6 +175,22 @@ class Data {
 
   randnot() {
     return this.notation;
+  }
+
+  changeDifficulty(diff) {
+    console.log(diff);
+    if (diff == "easy") {
+      this.addsubdifficulty = 100;
+      this.muldivdifficulty = 10;
+    }
+    if (diff == "medium") {
+      this.addsubdifficulty = 500;
+      this.muldivdifficulty = 20;
+    }
+    if (diff == "hard") {
+      this.addsubdifficulty = 1000;
+      this.muldivdifficulty = 30;
+    }
   }
 }
 

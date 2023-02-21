@@ -81,16 +81,21 @@ function DivMaths({ route, navigation }) {
   };
 
   const gameEnd = () => {
-    data.rand();
-    data.randnew();
+    data.reset();
+    data.newdiv();
     seterrors(0);
     score.reset();
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Div");
   };
 
   const gameLeave = () => {
     setscore(score.reset());
     seterrors(0);
+    setcolour(AppColor.white);
+    setzero(data.showzero());
+    setvalue(data.showfirst());
     navigation.push("Home");
   };
 
