@@ -41,7 +41,7 @@ function RandMaths({ route, navigation }) {
     }
   };
 
-  const [input, setinput] = useState(data.showinput());
+  const [input, setinput] = useState();
   const [currentscore, setscore] = useState(score.showscore());
   const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
@@ -64,28 +64,26 @@ function RandMaths({ route, navigation }) {
   };
 
   //compares by calling data. If correct, it adds to score, checks if highscore, resets screen.
-  const compare = () => {
+  function compare() {
     if (data.randcheck() == true) {
       resultcorrect();
       //Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
       score.add();
       setscore(score.showscore());
       checkScore(score.showscore());
-      data.rand();
-      data.randnew();
-      setinput("");
-      setdisplay("???");
-      setnotation(data.randnot());
-      setzero(data.showzero());
-      setvalue(data.showfirst());
     } else {
       resultincorrect();
-      seterrors(errors + 1);
+      seterrors((errors) => errors + 1);
     }
     if (errors > 1) {
       setmodalvisible(true);
     }
-  };
+    data.randnew();
+    setinput("");
+    setdisplay("???");
+    setzero(data.showzero());
+    setvalue(data.showfirst());
+  }
 
   const gameEnd = () => {
     data.reset();
@@ -94,6 +92,7 @@ function RandMaths({ route, navigation }) {
     score.reset();
     setzero(data.showzero());
     setvalue(data.showfirst());
+    setcolour(AppColor.white);
     navigation.push("Rand");
   };
 
@@ -173,6 +172,8 @@ function RandMaths({ route, navigation }) {
         placeholder="Enter your Value"
         keyboardType="numeric"
         value={input}
+        autoFocus="true"
+        blurOnSubmit={modalvisible}
         onChangeText={(textinput) => [
           setinput(textinput),
           textin(textinput),

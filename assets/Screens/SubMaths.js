@@ -38,7 +38,7 @@ function SubMaths({ route, navigation }) {
 
   getdata();
 
-  const [input, setinput] = useState(data.showinput());
+  const [input, setinput] = useState();
   const [currentscore, setscore] = useState(score.showscore());
   const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
@@ -48,6 +48,7 @@ function SubMaths({ route, navigation }) {
   const [result, setresult] = useState("         ");
   const [modalvisible, setmodalvisible] = useState(false);
   const [errors, seterrors] = useState(0);
+  const [buttonpress, setpressed] = useState(false);
 
   const resultcorrect = () => {
     setresult("  Correct");
@@ -59,26 +60,26 @@ function SubMaths({ route, navigation }) {
     setcolour(AppColor.red);
   };
 
-  const compare = () => {
+  function compare() {
     if (data.subvalues() == true) {
-      //Alert.alert("Correct", "Nice Job!");
       resultcorrect();
+      //Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
       score.add();
       setscore(score.showscore());
       checkScore(score.showscore());
-      data.newminus();
-      setinput("");
-      setdisplay("???");
-      setzero(data.showzero());
-      setvalue(data.showfirst());
     } else {
       resultincorrect();
-      seterrors(errors + 1);
+      seterrors((errors) => errors + 1);
     }
     if (errors > 1) {
       setmodalvisible(true);
     }
-  };
+    data.newminus();
+    setinput("");
+    setdisplay("???");
+    setzero(data.showzero());
+    setvalue(data.showfirst());
+  }
 
   const gameEnd = () => {
     data.reset();
@@ -156,7 +157,7 @@ function SubMaths({ route, navigation }) {
             title="Check Answer"
             style={styles.button}
             onPress={() => {
-              data.changeinput(parseInt(input)), compare();
+              data.changeinput(parseInt(input)), compare(), setpressed(true);
             }}
           />
         </View>
@@ -167,6 +168,8 @@ function SubMaths({ route, navigation }) {
         value={input}
         placeholder="Enter your Value"
         keyboardType="numeric"
+        autoFocus="true"
+        blurOnSubmit={modalvisible || buttonpress}
         onChangeText={(textinput) => [
           setinput(textinput),
           textin(textinput),

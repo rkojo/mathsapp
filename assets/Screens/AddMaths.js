@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { StyleSheet, Alert, TextInput, View, Modal } from "react-native";
 import AppView from "../Components/AppView";
 import AppText from "../Components/AppText";
@@ -41,7 +41,8 @@ function AddMaths({ route, navigation }) {
     }
   };
 
-  const [input, setinput] = useState(data.showinput());
+  const textinputref = useRef({});
+  const [input, setinput] = useState();
   const [currentscore, setscore] = useState(score.showscore());
   const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
@@ -51,6 +52,7 @@ function AddMaths({ route, navigation }) {
   const [result, setresult] = useState("         ");
   const [modalvisible, setmodalvisible] = useState(false);
   const [errors, seterrors] = useState(0);
+  const [buttonpress, setpressed] = useState(false);
 
   const resultcorrect = () => {
     setresult("  Correct");
@@ -61,28 +63,35 @@ function AddMaths({ route, navigation }) {
     setresult("Incorrect");
     setcolour(AppColor.red);
   };
+  function checkiffocus() {
+    if (modalvisible == false) {
+      this.refs.textinputref.focus();
+    } else {
+      this.refs.textinputref.blur();
+    }
+  }
 
   //compares by calling data. If correct, it adds to score, checks if highscore, resets screen.
-  const compare = () => {
+  function compare() {
     if (data.addvalues() == true) {
       resultcorrect();
       //Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
       score.add();
       setscore(score.showscore());
       checkScore(score.showscore());
-      data.newadd();
-      setinput("");
-      setdisplay("???");
-      setzero(data.showzero());
-      setvalue(data.showfirst());
     } else {
       resultincorrect();
-      seterrors(errors + 1);
+      seterrors((errors) => errors + 1);
     }
     if (errors > 1) {
       setmodalvisible(true);
     }
-  };
+    data.newadd();
+    setinput("");
+    setdisplay("???");
+    setzero(data.showzero());
+    setvalue(data.showfirst());
+  }
   const gameEnd = () => {
     data.reset();
     data.newadd();
@@ -90,6 +99,7 @@ function AddMaths({ route, navigation }) {
     score.reset();
     setzero(data.showzero());
     setvalue(data.showfirst());
+    setcolour(AppColor.white);
     navigation.push("Add");
   };
 
@@ -158,7 +168,7 @@ function AddMaths({ route, navigation }) {
             title="Check Answer"
             style={styles.button}
             onPress={() => {
-              data.changeinput(parseInt(input)), compare();
+              data.changeinput(parseInt(input)), compare(), setpressed(true);
             }}
           />
         </View>
@@ -169,6 +179,9 @@ function AddMaths({ route, navigation }) {
         placeholder="Enter your Value"
         keyboardType="numeric"
         value={input}
+        key={textinputref}
+        autoFocus="true"
+        blurOnSubmit={modalvisible || buttonpress}
         onChangeText={(textinput) => [
           setinput(textinput),
           textin(textinput),

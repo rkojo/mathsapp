@@ -38,7 +38,7 @@ function MulMaths({ route, navigation }) {
 
   getdata();
 
-  const [input, setinput] = useState(data.showinput());
+  const [input, setinput] = useState();
   const [currentscore, setscore] = useState(score.showscore());
   const [zero, setzero] = useState(data.showzero());
   const [value, setvalue] = useState(data.showfirst());
@@ -59,26 +59,26 @@ function MulMaths({ route, navigation }) {
     setcolour(AppColor.red);
   };
 
-  const compare = () => {
+  function compare() {
     if (data.mulvalues() == true) {
       resultcorrect();
-      //Alert.alert("Correct", "Nice Job!");
+      //Alert.alert("Correct", "Nice Job!", "", { cancelable: true });
       score.add();
       setscore(score.showscore());
       checkScore(score.showscore());
-      data.newmul();
-      setinput("");
-      setdisplay("???");
-      setzero(data.showzero());
-      setvalue(data.showfirst());
     } else {
       resultincorrect();
-      seterrors(errors + 1);
+      seterrors((errors) => errors + 1);
     }
     if (errors > 1) {
       setmodalvisible(true);
     }
-  };
+    data.newmul();
+    setinput("");
+    setdisplay("???");
+    setzero(data.showzero());
+    setvalue(data.showfirst());
+  }
 
   const gameEnd = () => {
     data.reset();
@@ -87,6 +87,7 @@ function MulMaths({ route, navigation }) {
     score.reset();
     setzero(data.showzero());
     setvalue(data.showfirst());
+    setcolour(AppColor.white);
     navigation.push("Mul");
   };
 
@@ -165,6 +166,8 @@ function MulMaths({ route, navigation }) {
         value={input}
         placeholder="Enter your Value"
         keyboardType="numeric"
+        autoFocus="true"
+        blurOnSubmit={modalvisible}
         onChangeText={(textinput) => [
           setinput(textinput),
           textin(textinput),
