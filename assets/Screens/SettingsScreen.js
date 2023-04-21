@@ -39,7 +39,18 @@ function SettingsScreen({ route, navigation }) {
   const [difficulty, setDifficulty] = useState("hard");
   const [colour, setcolour] = useState(AppColor.white);
   const [currentdiff, setcurdiff] = useState(data.showdiff());
+  const [costa, setcosta] = useState(0);
 
+  function checkcosta() {
+    if (costa == 9) {
+      alert("Costa Mode Activated!");
+      setDifficulty("Costa");
+    }
+    if (costa == 18) {
+      alert("Costa Mode Deactivated!");
+      setDifficulty("Costa");
+    }
+  }
   return (
     <AppView>
       <Modal visible={modalvisible} style={styles.modal}>
@@ -71,6 +82,8 @@ function SettingsScreen({ route, navigation }) {
               setText(easymode()),
               setDifficulty("easy"),
               setcolour(AppColor.primaryColor),
+              setcosta((costa) => costa + 1),
+              checkcosta(),
             ]}
           />
           <AppButton
@@ -79,6 +92,7 @@ function SettingsScreen({ route, navigation }) {
               setText(mediummode()),
               setDifficulty("medium"),
               setcolour(AppColor.primaryColor),
+              setcosta(0),
             ]}
           />
           <AppButton
@@ -87,6 +101,7 @@ function SettingsScreen({ route, navigation }) {
               setText(hardmode()),
               setDifficulty("hard"),
               setcolour(AppColor.primaryColor),
+              setcosta(0),
             ]}
           />
           <AppText>{text}</AppText>
